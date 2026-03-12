@@ -34,12 +34,6 @@ static void keycolors_set_layer_color(int layer) {
 }
 
 bool rgb_matrix_indicators_user(void) {
-#if COMMUNITY_MODULE_ORYX_ENABLE == TRUE
-  if (rawhid_state.rgb_control) {
-      return false;
-  }
-#endif
-
     if (!keyboard_config.disable_layer_led) {
         switch (biton32(layer_state)) {
             case 1:
@@ -53,10 +47,8 @@ bool rgb_matrix_indicators_user(void) {
                     rgb_matrix_set_color_all(0, 0, 0);
                 }
         }
-    } else {
-        if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
-            rgb_matrix_set_color_all(0, 0, 0);
-        }
+    } else if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+        rgb_matrix_set_color_all(0, 0, 0);
     }
 
     return true;
